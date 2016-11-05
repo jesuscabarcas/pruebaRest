@@ -2,7 +2,9 @@ package example.microservice;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,65 +16,41 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-@Path("/library")
+@Path("/placasRobadas")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 public class Library {
 	 @GET
-	    @Path("/books")
-	    public List<Book> getBooks() {
-		 List<Book> b = new ArrayList<Book>();
-		 Book bo = new Book();
-		 bo.setTitle("test1");
-		 bo.setIsbn("12345");
-		 b.add(bo);
-	    
-		 bo = new Book();
-		 bo.setTitle("test2");
-		 bo.setIsbn("54321");
-		 b.add(bo);
+	    @Path("/placas")
+	    public List<Placas> getBooks() {
+		 List<Placas> listaPlacas = new ArrayList<Placas>();
+		 Placas	placas=null;
+	    for(int x=0;x<50;x++){
+	    	placas = new Placas();
+			 placas.setNumero("vba"+x);
+			 listaPlacas.add(placas);
+	    }
+		
 		 
-		 return b;
+		 return listaPlacas;
 	    }
 	 
 	    @GET
-	    @Path("/book/{isbn}")
-	    public Book getBook(@PathParam("isbn") String id) {
-			return null;
+	    @Path("/placas/{placa}")
+	    public Placas getVerificarPlaca(@PathParam("placa") String id) {
+	    	Map<String, Placas> map = new HashMap<String, Placas>();
+			 Placas	placas=null;
+		    for(int x=0;x<50;x++){
+		    	placas = new Placas();
+				 placas.setNumero("vba"+x);
+				 map.put(placas.getNumero(),placas);
+		    }
+		    Placas pl=map.get(id);
+	    	
+	    	return pl;
 	    
 	    }
 	 
-	    @PUT
-	    @Path("/book/{isbn}")
-	    public Book addBook(@PathParam("isbn") String id, @QueryParam("title") String title) {
-			return null;
-	    }
-	 
-	    @POST
-	    @Path("/book/{isbn}")
-	    public Book updateBook(@PathParam("isbn") String id, String title) {
-			return null;
-	    }
-	 
-	    @DELETE
-	    @Path("/book/{isbn}")
-	    public Book removeBook(@PathParam("isbn") String id) {
-			return null;
-	    }
-	    
-	    @GET
-	    @Path("/saludo/{nombre}")
-	    public String saludar(@PathParam("nombre") String name) {
-			
-	    	System.out.println("Hello: " + name);
-		    return "Hello " + name + "!";
-	    }
-	    
-	    @GET
-	    @Path("/sumar/{dato1}/{dato2}")
-	    public int saludar(@PathParam("dato1") int dato1,@PathParam("dato2") int dato2) {
-	    	System.out.println("sumar: " + (dato1+dato2));
-		    return (dato1+dato2);
-	    }
+	   
 	    
 }
